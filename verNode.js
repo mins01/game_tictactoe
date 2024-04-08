@@ -2,11 +2,40 @@ import os from 'os';
 
 import Game from "./tictactoe/Game.js";
 import Player from "./tictactoe/Player.js";
-import { error, profileEnd } from 'console';
+import ComLv1 from "./tictactoe/ComLv1.js";
+
+// console.log(process.argv);
+if(process.argv.length < 3){
+    console.log('RUN: node verNode.js (pp|cc|pc|cp) {infiate}');
+    process.exit(1);
+}
 
 let game = new Game;
-game.player1 = new Player(game,'플레이어1','O');
-game.player2 = new Player(game,'플레이어2','X');
+switch(process.argv[2]){
+    case 'pp':
+        game.player1 = new Player(game,'플레이어1','O');
+        game.player2 = new Player(game,'플레이어2','X');
+    break;
+    case 'cc':
+        game.player1 = new ComLv1(game,'COM1','O');
+        game.player2 = new ComLv1(game,'COM2','X');
+    break;
+    case 'pc':
+        game.player1 = new Player(game,'플레이어1','O');
+        game.player2 = new ComLv1(game,'COM2','X');
+    break;
+    case 'cp':
+        game.player1 = new ComLv1(game,'COM1','O');
+        game.player2 = new Player(game,'플레이어2','X');
+    break;
+}
+if(process.argv[3]){
+    game.limit = 7; // 마크 수 제한모드. 자동으로 가장 마자막 마킹이 사라짐
+}
+
+
+// game.player1 = new ComLv1(game,'COM1','O');
+// game.player2 = new ComLv1(game,'COM2','X');
 
 game.ondraw = function(){
     let out = [];
@@ -16,12 +45,12 @@ game.ondraw = function(){
     
     this.board.value.forEach((player,idx) => {
         if(player===null){
-            line.push('-');
+            line.push("\x1b[90m"+idx+"\x1b[0m");
         }else{
             if(game.player1===player){
-                line.push("\x1b[31m"+player.symbol+"\x1b[0m");
+                line.push("\x1b[31m\x1b[4m"+player.symbol+"\x1b[0m");
             }else{
-                line.push("\x1b[34m"+player.symbol+"\x1b[0m");
+                line.push("\x1b[34m\x1b[4m"+player.symbol+"\x1b[0m");
             }
             
         }
@@ -32,7 +61,14 @@ game.ondraw = function(){
     });
     // out.push(os.EOL);
     console.clear();
+    if(this.infinite){
+        console.log("\x1b[32m"+'# INFINITE MODE'+"\x1b[0m")
+    }
+    console.log("\x1b[32m"+'# TURN: '+this.turn+"\x1b[0m")
     console.log("\x1b[0m",out.join(os.EOL),"\x1b[0m")
+    console.log();
+    console.log("\x1b[32m"+'# HISTORY: '+this.history.slice(-9).map((r)=>{return r[0].toString().trim()}).join(',')+"\x1b[0m")
+    
 
     if(!this.ended){
         if(player){
@@ -43,11 +79,13 @@ game.ondraw = function(){
             }
         }
     }else{
-        if(game.player1===game.winner){
+        if(game.winner===null){
+            console.log("\x1b[33m"+'### DRAW GAME ###'+"\x1b[0m");
+        }else if(game.player1===game.winner){
             console.log("\x1b[31m"+'### WINNER: '+`@${player.name}`+' ###'+"\x1b[0m");
-         }else{
+        }else{
             console.log("\x1b[34m"+'### WINNER: '+`@${player.name}`+' ###'+"\x1b[0m");
-         }
+        }
     }
 }
 game.onend = function(){

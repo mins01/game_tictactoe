@@ -8,6 +8,8 @@ class Game{
     running = false;
     ended = false;
     winner = false;
+    history = null;
+    limit = false
     constructor(){
         this.board = new Board();
         this.player1 = null;
@@ -16,6 +18,8 @@ class Game{
         this.running = false;
         this.ended = false;
         this.winner = null;
+        this.history = [];
+        this.limit = false;
         this.reset();
     }
 
@@ -34,6 +38,7 @@ class Game{
     reset(){
         this.turn = 0;
         this.running = false;
+        this.history.length = 0;
     }
 
     start(){
@@ -41,13 +46,26 @@ class Game{
         this.running = true;
         this.ended = false;
         this.winner = null;
+        this.history.length = 0;
         this.next();
     }
     onstart(){
         console.log('Game.onstart()');
     }
     next(rturn){
-        // this.onnext();
+        
+        //--- 게임 승리 체크
+        let r = this.check();
+        if(r){ //승자가 있을 경우
+            this.end(r)
+        }else{
+            let ableIdxes = this.board.ableIdxes();
+            if(ableIdxes.length===0){ // 더이상 놓을 곳이 없을 경우
+                this.end(null)
+            }
+        }
+
+
         if(this.isEnd){
             this.draw();
             return this.end();
@@ -56,7 +74,16 @@ class Game{
             let player = this.currentPlayer;
             if(!player){return;}
         }
+        if(this.limit){ //마크 수 제한 모드
+            if(this.turn > this.limit){
+                let h = this.history.slice(-1*this.limit);
+                this.board.set(h[0][0],null);
+            }
+        }
         this.draw();
+        if(this.currentPlayer?.isCom){
+            this.currentPlayer.input();
+        }
     }
     // onnext(){
     //     console.log('Game.onnext()');
@@ -68,7 +95,9 @@ class Game{
         if(this.board.value[n]===undefined){ throw new Error(`board에 ${n}가 없습니다.`); }
         if(this.board.value[n]!==null){ throw new Error(`board에 ${n}은 비어있지 않습니다.`); }
         this.board.set(n,player);
-        let r = this.board.check();
+        this.history.push([n,player])
+        // let r = this.board.check();
+        // let ableIdxes = this.board.ableIdxes();
         // console.log('체크: ',r);
     }
     oninput(n){

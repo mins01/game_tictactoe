@@ -43,6 +43,15 @@ class Board{
         }
         return null
     }
+    ableIdxes(){
+        let idxes = [];
+        this.#board.forEach((el,idx) => {
+            if(el===null){
+                idxes.push(idx);
+            }
+        });
+        return idxes;
+    }
 }
 
 export default Board;
