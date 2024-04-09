@@ -51,12 +51,16 @@ class Player{
     scoreForLine(player,b1,b2,b3){
         let r = 0;
         let mine = 0;
-        if(r<0){}else if(player===b1){ mine++; r+=5; }else if(null===b1){ r++ }else{ r= -100; }
-        if(r<0){}else if(player===b2){ mine++; r+=5; }else if(null===b2){ r++ }else{ r= -100; }
-        if(r<0){}else if(player===b3){ mine++; r+=5; }else if(null===b3){ r++ }else{ r= -100; }
+        let other = 0;
+        if(player===b1){ mine++; r+=5; }else if(null===b1){ r++ }else{ other++; r= -100; }
+        if(player===b2){ mine++; r+=5; }else if(null===b2){ r++ }else{ other++; r= -100; }
+        if(player===b3){ mine++; r+=5; }else if(null===b3){ r++ }else{ other++; r= -100; }
         if(mine>=2){
+            r = 2000;
+        }else if(other>=2){
             r = 1000;
-        }       
+        }
+        // console.log('other',other);
         
         return r
     }
@@ -82,7 +86,7 @@ class Player{
             if(b[idx] !== null){
                 // rs.push({k:idx,v:0});
             }else{
-                rs.push({k:idx,v:v});
+                rs.push([idx,v]);
             }
         })
         return rs;

@@ -42,11 +42,14 @@
     <script type="module">
         import game from "./verWeb.js";
         globalThis.game = game;
-        game.limit = 7;
+        game.limit = 6;
         import Player from "./tictactoe/Player.js";
         import ComLv1 from "./tictactoe/ComLv1.js";
+        import ComLv2 from "./tictactoe/ComLv2.js";
         globalThis.Player = Player;
         globalThis.ComLv1 = ComLv1;
+        globalThis.ComLv2 = ComLv2;
+        game.player2 = new ComLv2(game,'COM2:LV2','X');
     </script>
     <script>
         function gameInput(n){
@@ -113,7 +116,8 @@
                         <span class="input-group-text">PLAYER 1</span>
                         <div class="form-control  d-flex">
                             <label class="w-50 flex-fill text-center"><input type="radio" name="player1" value="h" checked onclick="game.player1 = new Player(game,'HUMAN1','O')"> HUMAN</label> 
-                            <label class="w-50 flex-fill text-center"><input type="radio" name="player1" value="c" onclick="game.player1 = new ComLv1(game,'COM1','O')"> COM</label>
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="player1" value="c" onclick="game.player1 = new ComLv1(game,'COM1:LV1','O')"> COM:LV1</label>
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="player1" value="c" onclick="game.player1 = new ComLv2(game,'COM1:LV2','O')"> COM:LV2</label>
                         </div>
                     </div>
 
@@ -121,7 +125,8 @@
                         <span class="input-group-text">PLAYER 2</span>
                         <div class="form-control d-flex">
                             <label class="w-50 flex-fill text-center"><input type="radio" name="player2" value="h" onclick="game.player2 = new Player(game,'HUMAN2','X')"> HUMAN</label> 
-                            <label class="w-50 flex-fill text-center"><input type="radio" name="player2" value="c" checked onclick="game.player2 = new ComLv1(game,'COM2','X')"> COM</label>
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="player2" value="c" onclick="game.player2 = new ComLv1(game,'COM2:LV1','X')"> COM:LV2</label>
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="player2" value="c" checked onclick="game.player2 = new ComLv2(game,'COM2:LV2','X')"> COM:LV2</label>
                         </div>
                     </div>
 
@@ -129,7 +134,7 @@
                         <span class="input-group-text">게임 모드</span>
                         <div class="form-control d-flex">
                             <label class="w-50 flex-fill text-center"><input type="radio" name="mod" value="n" onclick="game.limit = 0"> 일반</label> 
-                            <label class="w-50 flex-fill text-center"><input type="radio" name="mod" value="l" checked onclick="game.limit = 7"> 갯수제한</label>
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="mod" value="l" checked onclick="game.limit = 6"> 갯수제한</label>
                         </div>
                     </div>
 

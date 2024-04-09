@@ -16,9 +16,13 @@ class ComLv1 extends Player{
     }
     inputCom(){
         // n = Math.floor(Math.random()*9);
-        let ableIdxes = this.game.board.ableIdxes();
-        ableIdxes.sort(() => Math.random() - 0.5);
-        let n = ableIdxes[0]; 
+        // let ableIdxes = this.game.board.ableIdxes();
+        // ableIdxes.sort(() => Math.random() - 0.5);
+        // let n = ableIdxes[0]; 
+        let ss = this.cellScores();
+        ss.sort((a,b)=>{return b[1]-a[1]})
+        // console.table(ss)
+        let n = ss[0][0];
         try{                       
             this.game.input(this,n);
             this.oninput(n);
