@@ -42,6 +42,7 @@
     <script type="module">
         import game from "./verWeb.js";
         globalThis.game = game;
+        game.limit = 7;
         import Player from "./tictactoe/Player.js";
         import ComLv1 from "./tictactoe/ComLv1.js";
         globalThis.Player = Player;
@@ -52,29 +53,25 @@
             if(game.ended){
                 game.restart();
             }else{
-                game.currentPlayer.input(n)
+                if(!game.currentPlayer.isCom){
+                    game.currentPlayer.input(n)
+                }else{
+                    console.log('COM의 차례입니다.');
+                }
             }
         }
     </script>
 </head>
-<body>
-    <div class="container-fluid game-tictactoe">
+<body class="game-tictactoe">
+    <div class="container-fluid ">
         <div class="d-flex flex-column">
-            <header class="container ">
+            <header class="container game-header ">
                 <div class="d-flex justify-content-center align-items-center  gap-3">
                     <h1>TIC TAC TOE</h1>
                     <div><button type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#modal_setting"><i class="bi bi-gear"></i></button></div>
                 </div>
-                <div class="msg-box-container">
-                    <div class="msg-box current-player-0"></div>
-                    <div class="msg-box current-player-1">Player1의 차례입니다.</div>
-                    <div class="msg-box current-player-2">Player2의 차례입니다.</div>
-                    <div class="msg-box winner-0">DRAW GAME</div>
-                    <div class="msg-box winner-1">WINNER : Player1</div>
-                    <div class="msg-box winner-2">WINNER : Player2</div>
-                </div>
             </header>
-            <section class="  flex-fill d-flex justify-content-center align-items-center">
+            <section class=" game-body  flex-fill d-flex justify-content-center align-items-center ">
                 <div class="board">
                     <div class="box"  onclick="gameInput(0)" data-value="0"></div>
                     <div class="box"  onclick="gameInput(1)" data-value="1"></div>
@@ -86,11 +83,22 @@
                     <div class="box"  onclick="gameInput(7)"></div>
                     <div class="box"  onclick="gameInput(8)"></div>
                 </div>
+                <div class="msg-box-container-wrap">
+                    <div class="msg-box-container">
+                        <!-- <div class="">메세지 박스</div> -->
+                        <div class="msg-box current-player-_"></div>
+                        <div class="msg-box current-player-1">Player1의 차례입니다.</div>
+                        <div class="msg-box current-player-2">Player2의 차례입니다.</div>
+                        <div class="msg-box winner-0">DRAW GAME<br>클릭하면 다시 게임을 시작합니다.</div>
+                        <div class="msg-box winner-1">WINNER : Player1<br>클릭하면 다시 게임을 시작합니다.</div>
+                        <div class="msg-box winner-2">WINNER : Player2<br>클릭하면 다시 게임을 시작합니다.</div>
+                    </div>
+                </div>
             </section>
         </div>
         
     </div>
-
+    
 
     <div class="modal" id="modal_setting" tabindex="-1">
         <div class="modal-dialog">
@@ -101,19 +109,27 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-1">
                         <span class="input-group-text">PLAYER 1</span>
-                        <div class="form-control">
-                            <label><input type="radio" name="player1" value="h" checked onclick="game.player1 = new Player(game,'HUMAN1','O')"> HUMAN</label> / 
-                            <label><input type="radio" name="player1" value="c" onclick="game.player1 = new ComLv1(game,'COM1','O')"> COM</label>
+                        <div class="form-control  d-flex">
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="player1" value="h" checked onclick="game.player1 = new Player(game,'HUMAN1','O')"> HUMAN</label> 
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="player1" value="c" onclick="game.player1 = new ComLv1(game,'COM1','O')"> COM</label>
                         </div>
                     </div>
 
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-1">
                         <span class="input-group-text">PLAYER 2</span>
-                        <div class="form-control">
-                            <label><input type="radio" name="player2" value="h" checked onclick="game.player2 = new Player(game,'HUMAN2','X')"> HUMAN</label> / 
-                            <label><input type="radio" name="player2" value="c" onclick="game.player2 = new ComLv1(game,'COM2','X')"> COM</label>
+                        <div class="form-control d-flex">
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="player2" value="h" onclick="game.player2 = new Player(game,'HUMAN2','X')"> HUMAN</label> 
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="player2" value="c" checked onclick="game.player2 = new ComLv1(game,'COM2','X')"> COM</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">게임 모드</span>
+                        <div class="form-control d-flex">
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="mod" value="n" onclick="game.limit = 0"> 일반</label> 
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="mod" value="l" checked onclick="game.limit = 7"> 갯수제한</label>
                         </div>
                     </div>
 
@@ -125,7 +141,6 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>

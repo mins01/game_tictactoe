@@ -30,12 +30,10 @@ let game = new Game;
 // if(process.argv[3]){
 //     game.limit = 7; // 마크 수 제한모드. 자동으로 가장 마자막 마킹이 사라짐
 // }
-game.player1 = new Player(game,'플레이어1','o');
-game.player2 = new Player(game,'플레이어2','x');
-
-
+game.player1 = new Player(game,'HUMAN1','o');
+// game.player2 = new Player(game,'플레이어2','x');
 // game.player1 = new ComLv1(game,'COM1','O');
-// game.player2 = new ComLv1(game,'COM2','X');
+game.player2 = new ComLv1(game,'COM2','X');
 
 game.ondraw = function(){
     let out = [];
@@ -61,8 +59,8 @@ game.ondraw = function(){
     });
     // out.push("\n");
     // console.clear();
-    if(this.infinite){
-        console.log('# INFINITE MODE')
+    if(this.limit){
+        console.log('# limit MODE')
     }
     console.log('# TURN: '+this.turn)
     console.log(out.join("\n"))
@@ -117,9 +115,9 @@ game.onend = function(){
 
     setTimeout(()=>{
         if(this.winner===null){
-            alert('### DRAW GAME ###');
+            // alert('### DRAW GAME ###');
         }else if(this.winner){
-            alert('### WINNER: '+`@${this.winner.name}`+' ###');
+            // alert('### WINNER: '+`@${this.winner.name}`+' ###');
         }
     },100)
     

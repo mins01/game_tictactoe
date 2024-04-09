@@ -61,8 +61,8 @@ game.ondraw = function(){
     });
     // out.push(os.EOL);
     console.clear();
-    if(this.infinite){
-        console.log("\x1b[32m"+'# INFINITE MODE'+"\x1b[0m")
+    if(this.limit){
+        console.log("\x1b[32m"+'# limit MODE'+"\x1b[0m")
     }
     console.log("\x1b[32m"+'# TURN: '+this.turn+"\x1b[0m")
     console.log("\x1b[0m",out.join(os.EOL),"\x1b[0m")

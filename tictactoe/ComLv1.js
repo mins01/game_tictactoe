@@ -1,10 +1,11 @@
 import Player from "./Player.js";
 
 class ComLv1 extends Player{
-
+    isCom = true;
     delay = 500;
     constructor(game,name,symbol){
         super(game,name,symbol,true)
+        this.isCom = true;
     }
 
     init(){
