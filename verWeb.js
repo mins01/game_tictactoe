@@ -41,7 +41,7 @@ game.ondraw = function(){
     out.push("\n");
     let player = this.currentPlayer
     
-    this.board.value.forEach((player,idx) => {
+    this.board.cells.forEach((player,idx) => {
         if(player===null){
             line.push(idx);
         }else{
@@ -88,7 +88,7 @@ game.ondraw = function(){
     let div_boxes = document.querySelectorAll('.board .box');
 
     div_game.dataset.ended = this.ended.toString();
-    this.board.value.forEach((player,idx) => {
+    this.board.cells.forEach((player,idx) => {
         if(player===null){
             div_boxes[idx].dataset.value="0";
         }else{

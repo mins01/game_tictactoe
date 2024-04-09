@@ -48,47 +48,59 @@ class Player{
         }
     }
 
-    scoreForLine(player,b1,b2,b3){
+    scoreForLine(line){
+        let cells = this.game.board.cells;        
+        let player = this;
+        let c1 = cells[line[0]];
+        let c2 = cells[line[1]];
+        let c3 = cells[line[2]];
         let r = 0;
-        let mine = 0;
-        let other = 0;
-        if(player===b1){ mine++; r+=5; }else if(null===b1){ r++ }else{ other++; r= -100; }
-        if(player===b2){ mine++; r+=5; }else if(null===b2){ r++ }else{ other++; r= -100; }
-        if(player===b3){ mine++; r+=5; }else if(null===b3){ r++ }else{ other++; r= -100; }
-        if(mine>=2){
-            r = 2000;
-        }else if(other>=2){
-            r = 1000;
-        }
-        // console.log('other',other);
-        
+        let mines = 0;
+        let others = 0;
+        let nones = 0;
+        if(player===c1){ mines++; }else if(null===c1){ nones++; }else{ others++;}
+        if(player===c2){ mines++; }else if(null===c2){ nones++; }else{ others++;}
+        if(player===c3){ mines++; }else if(null===c3){ nones++; }else{ others++;}
+             if(mines==2){ r = 900; }
+        else if(others==2){ r = 900; }
+        else if(mines==1 && others==1){ r = 0; }
+        else if(mines==1){ r = 50; }
+        else if(others==1){ r = 40; }
+        else if(nones==3){ r = 0;     }
+        // if([bIdx1,bIdx2,bIdx3].includes(4)){
+        //     r *= 1.2;
+        // }        
         return r
     }
     cellScores(){
-        let b = this.game.board.value;
+        let cells = this.game.board.cells;
+
+        let lines = this.game.board.constructor.lines;
+
+        
+
+
         // let ableIdxes = this.game.board.ableIdxes();
-        let ss = [0,0,0,0,1,0,0,0,0];
-        let r = 0;
-        r = this.scoreForLine(this,b[0],b[1],b[2]); ss[0]+=r;ss[1]+=r;ss[2]+=r;
-        r = this.scoreForLine(this,b[3],b[4],b[5]); ss[3]+=r;ss[4]+=r;ss[5]+=r;
-        r = this.scoreForLine(this,b[6],b[7],b[8]); ss[6]+=r;ss[7]+=r;ss[8]+=r;
-        r = this.scoreForLine(this,b[0],b[3],b[6]); ss[0]+=r;ss[3]+=r;ss[6]+=r;
-        r = this.scoreForLine(this,b[1],b[4],b[7]); ss[1]+=r;ss[4]+=r;ss[7]+=r;
-        r = this.scoreForLine(this,b[2],b[5],b[8]); ss[2]+=r;ss[5]+=r;ss[8]+=r;
-        r = this.scoreForLine(this,b[0],b[4],b[8]); ss[0]+=r;ss[4]+=r;ss[8]+=r;
-        r = this.scoreForLine(this,b[2],b[4],b[6]); ss[2]+=r;ss[4]+=r;ss[6]+=r;
         
         let rs = [];
 
-        // console.log(ss);
-        // 놓을 수 없는 부분은 뺌
-        ss.forEach((v,idx,arr)=>{
-            if(b[idx] !== null){
-                // rs.push({k:idx,v:0});
-            }else{
-                rs.push([idx,v]);
+        cells.forEach((palyer,idx)=>{
+            if(palyer!==null){return;}
+            let vs = [];
+            lines.forEach((line)=>{
+                if(!line.includes(idx)){return;}
+                vs.push(this.scoreForLine(line));
+            })
+            // let v = vs.reduce((a, c) => a + c, 0)/vs.length;
+            let v = Math.max(...vs)+vs.length;
+            if(idx===4){
+                v = Math.max(v,80);
             }
+            rs.push([idx,v]);
         })
+
+        console.log('vs',JSON.stringify(rs));
+
         return rs;
     }
 }

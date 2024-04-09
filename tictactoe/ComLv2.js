@@ -22,7 +22,15 @@ class ComLv1 extends Player{
         let ss = this.cellScores();
         ss.sort((a,b)=>{return b[1]-a[1]})
         // console.table(ss)
-        let n = ss[0][0];
+        // let n = ss[0][0];
+        let m = ss[0][1];
+        let ss2 = ss.filter((v)=>{
+            if(v[1]===m){return v;}
+            return null;
+        })
+        ss2.sort(() => Math.random() - 0.5);
+        let n = ss2[0][0];
+        console.log('ss2',this.name,JSON.stringify(ss2));
         try{                       
             this.game.input(this,n);
             this.oninput(n);

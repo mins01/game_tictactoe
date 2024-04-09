@@ -98,8 +98,8 @@ class Game{
         if(this.currentPlayer !== player){ throw new Error('해당 플레이어의 턴이 아닙니다.'); }
         if(isNaN(n)){ throw new Error('숫자가 아닙니다.'); }
         if(n < 0 || n > 8){ throw new Error('지정 범위의 숫자가 아닙니다.'); }
-        if(this.board.value[n]===undefined){ throw new Error(`board에 ${n}가 없습니다.`); }
-        if(this.board.value[n]!==null){ throw new Error(`board에 ${n}은 비어있지 않습니다.`); }
+        if(this.board.cells[n]===undefined){ throw new Error(`board에 ${n}가 없습니다.`); }
+        if(this.board.cells[n]!==null){ throw new Error(`board에 ${n}은 비어있지 않습니다.`); }
         this.board.set(n,player);
         this.history.push([n,player])
         // let r = this.board.check();

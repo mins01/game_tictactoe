@@ -1,27 +1,37 @@
 class Board{
-    #board = null;
+    #cells = null;
+    static lines = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6],
+    ]
     constructor(){
-        this.#board = [null,null,null,null,null,null,null,null,null];
+        this.#cells = [null,null,null,null,null,null,null,null,null];
     }
     reset(){
-        this.#board.fill(null);
+        this.#cells.fill(null);
     }
     set(idx,v){
-        this.#board[idx] = v;
+        this.#cells[idx] = v;
     }
     setXY(xIdx,yIdx,v){
         let idx = this.XYtoIdx(xIdx,yIdx);
         this.set(idx,v);
     }
     get(idx){
-        return this.#board[idx];
+        return this.#cells[idx];
     }
     getXY(xIdx,yIdx){
         let idx = this.XYtoIdx(xIdx,yIdx);
         return this.get(idx);
     }
-    get value(){
-        return this.#board;
+    get cells(){
+        return this.#cells;
     }
     idxToXY(idx){
         let x = idx % 3;
@@ -36,19 +46,17 @@ class Board{
     }
 
     check(){
-        let b = this.#board;
         let r = null;
-             if(r = this.isSame(b[0],b[1],b[2])){ return r; }
-        else if(r = this.isSame(b[3],b[4],b[5])){ return r; }
-        else if(r = this.isSame(b[6],b[7],b[8])){ return r; }
-        else if(r = this.isSame(b[0],b[3],b[6])){ return r; }
-        else if(r = this.isSame(b[1],b[4],b[7])){ return r; }
-        else if(r = this.isSame(b[2],b[5],b[8])){ return r; }
-        else if(r = this.isSame(b[0],b[4],b[8])){ return r; }
-        else if(r = this.isSame(b[2],b[4],b[6])){ return r; }
+        for(let i=0,m=Board.lines.length;i<m;i++){
+            r = this.whoLined(Board.lines[i]);
+            if(r){return r;}
+        }
         return null;
     }
-    isSame(b1,b2,b3){
+    whoLined(line){
+        let b1=this.#cells[line[0]];
+        let b2=this.#cells[line[1]];
+        let b3=this.#cells[line[2]];
         if(b1 !== null && b1===b2 && b2===b3){
             return b1;
         }
@@ -56,7 +64,7 @@ class Board{
     }
     ableIdxes(){
         let idxes = [];
-        this.#board.forEach((el,idx) => {
+        this.#cells.forEach((el,idx) => {
             if(el===null){
                 idxes.push(idx);
             }

@@ -42,7 +42,7 @@
     <script type="module">
         import game from "./verWeb.js";
         globalThis.game = game;
-        game.limit = 6;
+        game.limit = 8;
         import Player from "./tictactoe/Player.js";
         import ComLv1 from "./tictactoe/ComLv1.js";
         import ComLv2 from "./tictactoe/ComLv2.js";
@@ -134,7 +134,7 @@
                         <span class="input-group-text">게임 모드</span>
                         <div class="form-control d-flex">
                             <label class="w-50 flex-fill text-center"><input type="radio" name="mod" value="n" onclick="game.limit = 0"> 일반</label> 
-                            <label class="w-50 flex-fill text-center"><input type="radio" name="mod" value="l" checked onclick="game.limit = 6"> 갯수제한</label>
+                            <label class="w-50 flex-fill text-center"><input type="radio" name="mod" value="l" checked onclick="game.limit = 8"> 갯수제한</label>
                         </div>
                     </div>
 

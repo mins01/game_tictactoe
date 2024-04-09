@@ -3,6 +3,7 @@ import os from 'os';
 import Game from "./tictactoe/Game.js";
 import Player from "./tictactoe/Player.js";
 import ComLv1 from "./tictactoe/ComLv1.js";
+import ComLv2 from "./tictactoe/ComLv2.js";
 
 // console.log(process.argv);
 if(process.argv.length < 3){
@@ -17,20 +18,20 @@ switch(process.argv[2]){
         game.player2 = new Player(game,'HUMAN2','X');
     break;
     case 'cc':
-        game.player1 = new ComLv1(game,'COM1','O');
-        game.player2 = new ComLv1(game,'COM2','X');
+        game.player1 = new ComLv2(game,'COM1','O');
+        game.player2 = new ComLv2(game,'COM2','X');
     break;
     case 'hc':
         game.player1 = new Player(game,'HUMAN1','O');
-        game.player2 = new ComLv1(game,'COM2','X');
+        game.player2 = new ComLv2(game,'COM2','X');
     break;
     case 'ch':
-        game.player1 = new ComLv1(game,'COM1','O');
+        game.player1 = new ComLv2(game,'COM1','O');
         game.player2 = new Player(game,'HUMAN2','X');
     break;
 }
 if(process.argv[3]){
-    game.limit = 7; // 마크 수 제한모드. 자동으로 가장 마자막 마킹이 사라짐
+    game.limit = 8; // 마크 수 제한모드. 자동으로 가장 마자막 마킹이 사라짐
 }
 
 
@@ -43,7 +44,7 @@ game.ondraw = function(){
     out.push(os.EOL);
     let player = this.currentPlayer
     
-    this.board.value.forEach((player,idx) => {
+    this.board.cells.forEach((player,idx) => {
         if(player===null){
             line.push("\x1b[90m"+idx+"\x1b[0m");
         }else{
