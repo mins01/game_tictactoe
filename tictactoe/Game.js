@@ -27,6 +27,7 @@ class Game{
         return false;
     }
     get currentPlayer(){
+        if(this.ended){ return null; }
         if(!this.running){ return null; }
         if(this.turn%2==1){
             return this.player1;
@@ -35,10 +36,15 @@ class Game{
         }
     }
 
+    restart(){
+        this.reset();
+        this.start();
+    }
     reset(){
         this.turn = 0;
         this.running = false;
         this.history.length = 0;
+        this.board.reset();
     }
 
     start(){
@@ -81,7 +87,7 @@ class Game{
             }
         }
         this.draw();
-        if(this.currentPlayer?.isCom){
+        if(!this.ended && this.currentPlayer?.isCom){
             this.currentPlayer.input();
         }
     }

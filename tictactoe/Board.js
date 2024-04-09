@@ -3,7 +3,7 @@ class Board{
     constructor(){
         this.#board = [null,null,null,null,null,null,null,null,null];
     }
-    resetAll(){
+    reset(){
         this.#board.fill(null);
     }
     set(idx,v){

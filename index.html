@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ko" >
+<head>
+    <title>tictactoe</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="http://www.mins01.com/favicon.ico"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="/js/ForGoogle.js"></script>
+    <!-- google analytics -->
+    <script>if(window.ForGoogle){ ForGoogle.analytics() }else{ console.log("failure : ForGoogle.analytics()");}</script>
+    
+
+    <!-- jquery 관련 -->
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script> -->
+
+    <!-- 부트스트랩 5.3.x -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- vue.js -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    
+    <!-- meta og -->
+    
+    <meta property="og:title" content="tictactoe">
+    <meta property="og:description" content="tictactoe">
+    <meta name="og:image" content="http://www.mins01.com/img/logo.gif">
+    <meta property="og:image:width" content="190">
+    <meta property="og:image:height" content="70" />
+    <meta property="og:site_name" content="tictactoe" />
+    <meta property="og:type" content="website">
+    
+    <!-- //meta og -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/style.css">
+    <!-- <script type="module" src="verWeb.js"></script> -->
+    <script type="module">
+        import game from "./verWeb.js";
+        globalThis.game = game;
+        import Player from "./tictactoe/Player.js";
+        import ComLv1 from "./tictactoe/ComLv1.js";
+        globalThis.Player = Player;
+        globalThis.ComLv1 = ComLv1;
+    </script>
+    <script>
+        function gameInput(n){
+            if(game.ended){
+                game.restart();
+            }else{
+                game.currentPlayer.input(n)
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container-fluid game-tictactoe">
+        <div class="d-flex flex-column">
+            <header class="container ">
+                <div class="d-flex justify-content-center align-items-center  gap-3">
+                    <h1>TIC TAC TOE</h1>
+                    <div><button type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#modal_setting"><i class="bi bi-gear"></i></button></div>
+                </div>
+                <div class="msg-box-container">
+                    <div class="msg-box current-player-0"></div>
+                    <div class="msg-box current-player-1">Player1의 차례입니다.</div>
+                    <div class="msg-box current-player-2">Player2의 차례입니다.</div>
+                    <div class="msg-box winner-0">DRAW GAME</div>
+                    <div class="msg-box winner-1">WINNER : Player1</div>
+                    <div class="msg-box winner-2">WINNER : Player2</div>
+                </div>
+            </header>
+            <section class="  flex-fill d-flex justify-content-center align-items-center">
+                <div class="board">
+                    <div class="box"  onclick="gameInput(0)" data-value="0"></div>
+                    <div class="box"  onclick="gameInput(1)" data-value="1"></div>
+                    <div class="box"  onclick="gameInput(2)" data-value="2"></div>
+                    <div class="box"  onclick="gameInput(3)"></div>
+                    <div class="box"  onclick="gameInput(4)"></div>
+                    <div class="box"  onclick="gameInput(5)"></div>
+                    <div class="box"  onclick="gameInput(6)"></div>
+                    <div class="box"  onclick="gameInput(7)"></div>
+                    <div class="box"  onclick="gameInput(8)"></div>
+                </div>
+            </section>
+        </div>
+        
+    </div>
+
+
+    <div class="modal" id="modal_setting" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">SETTING</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">PLAYER 1</span>
+                        <div class="form-control">
+                            <label><input type="radio" name="player1" value="h" checked onclick="game.player1 = new Player(game,'HUMAN1','O')"> HUMAN</label> / 
+                            <label><input type="radio" name="player1" value="c" onclick="game.player1 = new ComLv1(game,'COM1','O')"> COM</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">PLAYER 2</span>
+                        <div class="form-control">
+                            <label><input type="radio" name="player2" value="h" checked onclick="game.player2 = new Player(game,'HUMAN2','X')"> HUMAN</label> / 
+                            <label><input type="radio" name="player2" value="c" onclick="game.player2 = new ComLv1(game,'COM2','X')"> COM</label>
+                        </div>
+                    </div>
+
+                    <div class=" mb-3 text-center">
+                        <button type="button" class="btn btn-primary btn-lg" onclick="game.restart()"  data-bs-dismiss="modal">RESTART</button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

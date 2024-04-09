@@ -5,10 +5,10 @@ class ComLv1 extends Player{
     delay = 500;
     constructor(game,name,symbol){
         super(game,name,symbol,true)
-        console.log(`@${this.name}`,symbol,'new ComLv1()');
     }
 
     init(){
+        console.log(`@${this.name}`,this.symbol,'new ComLv1()');
     }
     input(n){
         setTimeout(()=>{this.inputCom()},this.delay);
@@ -23,7 +23,7 @@ class ComLv1 extends Player{
             this.oninput(n);
         }catch(e){
             this.oninput(n,e);
-            console.error("\x1b[41m",'ERROR: ',e.name,e.message,"\x1b[0m");
+            console.error('ERROR: ',e.name,e.message);
         }
     }
     oninput(n,e){

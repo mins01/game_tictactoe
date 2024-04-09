@@ -6,27 +6,27 @@ import ComLv1 from "./tictactoe/ComLv1.js";
 
 // console.log(process.argv);
 if(process.argv.length < 3){
-    console.log('RUN: node verNode.js (pp|cc|pc|cp) {infiate}');
+    console.log('RUN: node verNode.js (hh|cc|hc|ch) {infiate}');
     process.exit(1);
 }
 
 let game = new Game;
 switch(process.argv[2]){
-    case 'pp':
-        game.player1 = new Player(game,'플레이어1','O');
-        game.player2 = new Player(game,'플레이어2','X');
+    case 'hh':
+        game.player1 = new Player(game,'HUMAN1','O');
+        game.player2 = new Player(game,'HUMAN2','X');
     break;
     case 'cc':
         game.player1 = new ComLv1(game,'COM1','O');
         game.player2 = new ComLv1(game,'COM2','X');
     break;
-    case 'pc':
-        game.player1 = new Player(game,'플레이어1','O');
+    case 'hc':
+        game.player1 = new Player(game,'HUMAN1','O');
         game.player2 = new ComLv1(game,'COM2','X');
     break;
-    case 'cp':
+    case 'ch':
         game.player1 = new ComLv1(game,'COM1','O');
-        game.player2 = new Player(game,'플레이어2','X');
+        game.player2 = new Player(game,'HUMAN2','X');
     break;
 }
 if(process.argv[3]){
@@ -48,9 +48,9 @@ game.ondraw = function(){
             line.push("\x1b[90m"+idx+"\x1b[0m");
         }else{
             if(game.player1===player){
-                line.push("\x1b[31m\x1b[4m"+player.symbol+"\x1b[0m");
+                line.push("\x1b[31m\x1b[4m"+'O'+"\x1b[0m");
             }else{
-                line.push("\x1b[34m\x1b[4m"+player.symbol+"\x1b[0m");
+                line.push("\x1b[34m\x1b[4m"+'X'+"\x1b[0m");
             }
             
         }
@@ -73,9 +73,9 @@ game.ondraw = function(){
     if(!this.ended){
         if(player){
             if(game.player1===player){
-               process.stdout.write("\x1b[31m"+'# INPUT: '+`@${player.name}`+'('+player.symbol+')[0-8,t,q]: '+"\x1b[0m");
+               process.stdout.write("\x1b[31m"+'# INPUT: '+`@${player.name}`+'(O)[0-8,t,q]: '+"\x1b[0m");
             }else{
-               process.stdout.write("\x1b[34m"+'# INPUT: '+`@${player.name}`+'('+player.symbol+')[0-8,t,q]: '+"\x1b[0m");
+               process.stdout.write("\x1b[34m"+'# INPUT: '+`@${player.name}`+'(X)[0-8,t,q]: '+"\x1b[0m");
             }
         }
     }else{

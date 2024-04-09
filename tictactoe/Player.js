@@ -9,10 +9,11 @@ class Player{
         this.name = name
         this.symbol = symbol
         this.isCom = isCom;
-        console.log(`@${this.name}`,symbol,'new Player()');
+        this.init();    
     }
 
     init(){
+        console.log(`@${this.name}`,this.symbol,'new Player()');
     }
     input(n){
         try{
@@ -20,7 +21,7 @@ class Player{
             this.oninput(n);
         }catch(e){
             this.oninput(n,e);
-            console.error("\x1b[41m",'ERROR: ',e.name,e.message,"\x1b[0m");
+            console.error('ERROR: ',e.name,e.message);
         }
     }
     // oninput(n,e){
