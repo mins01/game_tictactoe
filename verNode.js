@@ -79,12 +79,12 @@ game.ondraw = function(){
             }
         }
     }else{
-        if(game.winner===null){
+        if(this.winner===null){
             console.log("\x1b[33m"+'### DRAW GAME ###'+"\x1b[0m");
-        }else if(game.player1===game.winner){
-            console.log("\x1b[31m"+'### WINNER: '+`@${player.name}`+' ###'+"\x1b[0m");
+        }else if(this.player1===this.winner){
+            console.log("\x1b[31m"+'### WINNER: '+`@${this.winner.name}`+' ###'+"\x1b[0m");
         }else{
-            console.log("\x1b[34m"+'### WINNER: '+`@${player.name}`+' ###'+"\x1b[0m");
+            console.log("\x1b[34m"+'### WINNER: '+`@${this.winner.name}`+' ###'+"\x1b[0m");
         }
     }
 }

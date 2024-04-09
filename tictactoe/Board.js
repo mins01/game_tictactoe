@@ -10,18 +10,29 @@ class Board{
         this.#board[idx] = v;
     }
     setXY(xIdx,yIdx,v){
-        let idx = yIdx*3+xIdx
+        let idx = this.XYtoIdx(xIdx,yIdx);
         this.set(idx,v);
     }
     get(idx){
         return this.#board[idx];
     }
     getXY(xIdx,yIdx){
-        let idx = yIdx*3+xIdx
+        let idx = this.XYtoIdx(xIdx,yIdx);
         return this.get(idx);
     }
     get value(){
         return this.#board;
+    }
+    idxToXY(idx){
+        let x = idx % 3;
+        let y = Math.floor(idx / 3);
+        return {x:x,y:y}
+    }
+    XYtoIdx(xIdx,yIdx){
+        if(xIdx<0 || xIdx>2){return null;}
+        if(yIdx<0 || yIdx>2){return null;}
+        return yIdx*3+xIdx;
+
     }
 
     check(){
